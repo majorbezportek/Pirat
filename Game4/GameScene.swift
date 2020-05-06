@@ -59,7 +59,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
     func jump() {
 
-        player.physicsBody?.applyImpulse(CGVector(dx: 0, dy: 50))
+        player.physicsBody?.applyImpulse(CGVector(dx: 0, dy: 150))
     }
     
     func jumpbutton() {
@@ -125,9 +125,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
            player = SKSpriteNode(texture: firstFrameTexture)
            player.position = CGPoint(x: -150, y: -90 )
           
-        player.setScale(0.090)
-       
-        player.physicsBody = SKPhysicsBody(rectangleOf:CGSize(width: 70, height: 20) )
+        //player.setScale(0.090)
+        player.size = CGSize(width: 170, height: 120)
+        player.physicsBody = SKPhysicsBody(rectangleOf:CGSize(width: 70, height: 100) )
         player.physicsBody?.allowsRotation =  false
         player.physicsBody?.categoryBitMask = playerCategory
         player.physicsBody?.collisionBitMask = enemy1Category
@@ -232,10 +232,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
     }
     override func didMove(to view: SKView) {
-    
+    if let planko = self.childNode(withName: "planko") as? SKSpriteNode{
+     planko.color = UIColor.green
+       physicsBody = SKPhysicsBody(rectangleOf:CGSize (width: 40, height: 40) )
+        }
+        
     if let element = self.childNode(withName: "element") as? SKSpriteNode{
                element.color = UIColor.green
         self.physicsWorld.contactDelegate = self
+        physicsBody = SKPhysicsBody(rectangleOf:CGSize (width: 40, height: 40))
         
         createPlayer()
         animateplayer_idle()
@@ -243,6 +248,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         backbutton()
         jumpbutton()
         attackbutton()
+    
+    
         
         }
         
