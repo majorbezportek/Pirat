@@ -19,11 +19,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     private var playerWalkingFrames_jump: [SKTexture] = []
     private var playerWalkingFrames_attack: [SKTexture] = []
     var player: SKSpriteNode = SKSpriteNode()
+    let cam = SKCameraNode()
     
     let playerCategory: UInt32 =  0x00000001 << 0
     let enemy1Category: UInt32 =  0x0000001 << 1
     
-
+    
     
     
     
@@ -34,12 +35,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         player.run(repeatAction)
         player.xScale = abs(player.xScale) * 1
         
+        
     }
     func goLeft() {
              let go = SKAction.moveBy(x: -3, y: 0, duration: 0.01)
              let repeatAction = SKAction.repeatForever(go)
     player.run(repeatAction)
     player.xScale = abs(player.xScale) * -1
+        
     }
         
     func button() {
@@ -48,6 +51,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             button.name = "previousButton"
         button.size = CGSize(width: 84.123, height: 93.571)
             self.addChild(button)
+        
         }
     func backbutton() {
          let backbutton = SKSpriteNode(imageNamed: "previousbutton.png")
@@ -229,17 +233,22 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             
         }
     }
+    
+    
     override func didMove(to view: SKView) {
+        
     if let planko = self.childNode(withName: "planko") as? SKSpriteNode{
      planko.color = UIColor.green
        //physicsBody = SKPhysicsBody(rectangleOf:CGSize (width: 40, height: 40) )
         }
         
+        
     if let element = self.childNode(withName: "element") as? SKSpriteNode{
                element.color = UIColor.green
         self.physicsWorld.contactDelegate = self
         physicsBody = SKPhysicsBody(rectangleOf:CGSize (width: 40, height: 40))
-        
+       
+
         create_enemy()
         createPlayer()
         animateplayer_idle()
@@ -247,18 +256,27 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         backbutton()
         jumpbutton()
         attackbutton()
-    
-    
-        
+        self.camera = cam
+        cam.position.x = 4
+        cam.position.y = 4
         }
         
         
     
-        func update(_ currentTime: TimeInterval) {
-        // Called before each frame is rendered
-    }
+       
        
           }
+    
+    
+    override func update(_ currentTime: TimeInterval) {
+           // Called before each frame is rendered
+       let location2 = player.position
+               let dx2 = (location2.x) + 130
+               let dy2 = (location2.y) + 130
+        cam.position.x = dx2
+        cam.position.y = dy2
+       }
+
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
          if let touch = touches.first {
                 let location = touch.location(in: self)
