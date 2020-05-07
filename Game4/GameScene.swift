@@ -127,7 +127,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
           
         //player.setScale(0.090)
         player.size = CGSize(width: 170, height: 120)
-        player.physicsBody = SKPhysicsBody(rectangleOf:CGSize(width: 70, height: 100) )
+        player.physicsBody = SKPhysicsBody(rectangleOf:CGSize(width: 55, height: 100) )
         player.physicsBody?.allowsRotation =  false
         player.physicsBody?.categoryBitMask = playerCategory
         player.physicsBody?.collisionBitMask = enemy1Category
@@ -179,15 +179,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if let enemy1 = self.childNode(withName: "enemy1") as? SKSpriteNode{
             
             enemy1.color = UIColor.green
-            enemy1.setScale(0.045)
-            enemy1.physicsBody? = SKPhysicsBody(texture: enemy1.texture!, size: enemy1.size)
+            enemy1.size = CGSize(width: 170, height: 120)
             enemy1.position = CGPoint(x: -150, y: -130 )
             enemy1.physicsBody?.allowsRotation =  false
             enemy1.physicsBody?.categoryBitMask = enemy1Category
             enemy1.physicsBody?.contactTestBitMask = playerCategory
+            enemy1.physicsBody = SKPhysicsBody(rectangleOf:CGSize(width: 25, height: 100) )
             enemy1.xScale = abs(enemy1.xScale) * -1
-      enemy1.physicsBody = SKPhysicsBody(rectangleOf:CGSize(width: 70, height: 40) )
-        
         }
         
         }
@@ -234,7 +232,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     override func didMove(to view: SKView) {
     if let planko = self.childNode(withName: "planko") as? SKSpriteNode{
      planko.color = UIColor.green
-       physicsBody = SKPhysicsBody(rectangleOf:CGSize (width: 40, height: 40) )
+       //physicsBody = SKPhysicsBody(rectangleOf:CGSize (width: 40, height: 40) )
         }
         
     if let element = self.childNode(withName: "element") as? SKSpriteNode{
@@ -242,6 +240,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.physicsWorld.contactDelegate = self
         physicsBody = SKPhysicsBody(rectangleOf:CGSize (width: 40, height: 40))
         
+        create_enemy()
         createPlayer()
         animateplayer_idle()
         button()
