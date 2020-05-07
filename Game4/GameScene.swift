@@ -43,6 +43,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     player.run(repeatAction)
     player.xScale = abs(player.xScale) * -1
         
+  
+    
     }
         
     func button() {
@@ -50,7 +52,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             button.position = CGPoint(x: -300, y: -120)
             button.name = "previousButton"
         button.size = CGSize(width: 84.123, height: 93.571)
-            self.addChild(button)
+        cam.addChild(button)
+        //self.addChild(button)
+        
         
         }
     func backbutton() {
@@ -59,7 +63,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         backbutton.zRotation = .pi / 1
             backbutton.name = "backButton"
         backbutton.size = CGSize(width: 84.123, height: 93.571)
-            self.addChild(backbutton)
+            //self.addChild(backbutton)
+          cam.addChild(backbutton)
         }
     func jump() {
 
@@ -72,7 +77,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         jumpbutton.zRotation = .pi / 2
             jumpbutton.name = "jumpButton"
         jumpbutton.size = CGSize(width: 84.123, height: 93.571)
-            self.addChild(jumpbutton)
+           // self.addChild(jumpbutton)
+        cam.addChild(jumpbutton)
         }
     
     func attackbutton() {
@@ -81,7 +87,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
           attackbutton.zRotation = .pi / 2
               attackbutton.name = "attackButton"
           attackbutton.size = CGSize(width: 84.123, height: 93.571)
-              self.addChild(attackbutton)
+             // self.addChild(attackbutton)
+        cam.addChild(attackbutton)
           }
     
     
@@ -248,6 +255,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.physicsWorld.contactDelegate = self
         physicsBody = SKPhysicsBody(rectangleOf:CGSize (width: 40, height: 40))
        
+        self.camera = cam
+        addChild(cam)
 
         create_enemy()
         createPlayer()
@@ -256,9 +265,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         backbutton()
         jumpbutton()
         attackbutton()
-        self.camera = cam
-        cam.position.x = 4
-        cam.position.y = 4
+        
+
+        
         }
         
         
@@ -272,9 +281,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
            // Called before each frame is rendered
        let location2 = player.position
                let dx2 = (location2.x) + 130
-               let dy2 = (location2.y) + 130
+               //let dy2 = (location2.y) + 130
         cam.position.x = dx2
-        cam.position.y = dy2
+        cam.position.y = 0
+        
        }
 
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -285,17 +295,19 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 for node in nodesarray {
                     if node.name == "previousButton" {
                          print("klik")
-                               goRight()
                         
+                               goRight()
                                 animateplayer()
                      }
                 }
             for node in nodesarray {
                 if node.name == "backButton" {
+                    
                      print("kliku kliku")
                     goLeft()
                     
                     animateplayer()
+                   
                  }
             }
             for node in nodesarray {
