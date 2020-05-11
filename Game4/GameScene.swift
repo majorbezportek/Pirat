@@ -18,8 +18,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     private var playerWalkingFrames_idle: [SKTexture] = []
     private var playerWalkingFrames_jump: [SKTexture] = []
     private var playerWalkingFrames_attack: [SKTexture] = []
-    var player: SKSpriteNode = SKSpriteNode()
+    var player = SKSpriteNode()
     let cam = SKCameraNode()
+  
     
     let playerCategory: UInt32 =  0x00000001 << 0
     let enemy1Category: UInt32 =  0x0000001 << 1
@@ -133,12 +134,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         playerWalkingFrames = walkFrames
         let firstFrameTexture = playerWalkingFrames[0]
-           player = SKSpriteNode(texture: firstFrameTexture)
+           
            player.position = CGPoint(x: -150, y: -90 )
           
         //player.setScale(0.090)
         player.size = CGSize(width: 170, height: 120)
         player.physicsBody = SKPhysicsBody(rectangleOf:CGSize(width: 55, height: 100) )
+       
         player.physicsBody?.allowsRotation =  false
         player.physicsBody?.categoryBitMask = playerCategory
         player.physicsBody?.collisionBitMask = enemy1Category
