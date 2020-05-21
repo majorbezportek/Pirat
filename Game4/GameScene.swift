@@ -20,7 +20,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     private var playerWalkingFrames_attack: [SKTexture] = []
     var player = SKSpriteNode()
     let cam = SKCameraNode()
-  
+    //var  healthpoint :  SKSpriteNode
     
     let playerCategory: UInt32 =  0x00000001 << 0
     let enemy1Category: UInt32 =  0x00000001 << 2
@@ -247,7 +247,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             print("COLLISION") }
         
             else {
-                print("Brak Kolizji" )
+                //print("Brak Kolizji" )
             }
         if collison == playermieczCategory | enemy1Category {
             print("miecz")
@@ -258,6 +258,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     override func didMove(to view: SKView) {
      self.physicsWorld.contactDelegate = self
+    
+        
+        
     if let planko = self.childNode(withName: "planko") as? SKSpriteNode{
      planko.color = UIColor.green
        //physicsBody = SKPhysicsBody(rectangleOf:CGSize (width: 40, height: 40) )
@@ -335,11 +338,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 if node.name == "attackButton" {
                      print("kliku kliku kliku kliku")
                     animateplayer_attack()
-                  player.physicsBody = SKPhysicsBody(rectangleOf:CGSize(width: 100, height: 100) )
+                  player.physicsBody = SKPhysicsBody(rectangleOf:CGSize(width: 120, height: 100) )
                   player.physicsBody?.allowsRotation =  false
                     player.physicsBody?.categoryBitMask = playermieczCategory
                     player.physicsBody?.collisionBitMask = enemy1Category
-                  
+                    
                  }
             }
         }
