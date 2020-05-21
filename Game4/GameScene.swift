@@ -23,7 +23,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
   
     
     let playerCategory: UInt32 =  0x00000001 << 0
-    let enemy1Category: UInt32 =  0x0000001 << 1
+    let enemy1Category: UInt32 =  0x00000001 << 2
+    let playermieczCategory: UInt32 =  0x0000001 << 1
     
     
     
@@ -144,6 +145,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         player.physicsBody?.allowsRotation =  false
         player.physicsBody?.categoryBitMask = playerCategory
         player.physicsBody?.collisionBitMask = enemy1Category
+        //player.physicsBody?.contactTestBitMask = enemy1Category
+        
         playerWalkingFrames_idle = walkFrames2
         playerWalkingFrames_jump = walkFrames3
         playerWalkingFrames_attack = walkFrames4
@@ -195,10 +198,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             enemy1.size = CGSize(width: 170, height: 120)
             enemy1.position = CGPoint(x: -150, y: -130 )
             enemy1.physicsBody?.allowsRotation =  false
-            enemy1.physicsBody?.categoryBitMask = enemy1Category
-            enemy1.physicsBody?.contactTestBitMask = playerCategory
+            
+            // enemy1.physicsBody?.collisionBitMask = playerCategory
             enemy1.physicsBody = SKPhysicsBody(rectangleOf:CGSize(width: 25, height: 100) )
             enemy1.xScale = abs(enemy1.xScale) * -1
+            enemy1.physicsBody?.categoryBitMask = enemy1Category
+            enemy1.physicsBody?.contactTestBitMask = playerCategory
+            enemy1.physicsBody?.contactTestBitMask = playermieczCategory
         }
         
         }
@@ -238,14 +244,20 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let collison: UInt32 = contact.bodyA.categoryBitMask | contact.bodyB.categoryBitMask
         
         if collison == playerCategory | enemy1Category{
-            print("COLLISION")
+            print("COLLISION") }
+        
+            else {
+                print("Brak Kolizji" )
+            }
+        if collison == playermieczCategory | enemy1Category {
+            print("miecz")
             
         }
     }
     
     
     override func didMove(to view: SKView) {
-        
+     self.physicsWorld.contactDelegate = self
     if let planko = self.childNode(withName: "planko") as? SKSpriteNode{
      planko.color = UIColor.green
        //physicsBody = SKPhysicsBody(rectangleOf:CGSize (width: 40, height: 40) )
@@ -323,6 +335,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 if node.name == "attackButton" {
                      print("kliku kliku kliku kliku")
                     animateplayer_attack()
+                  player.physicsBody = SKPhysicsBody(rectangleOf:CGSize(width: 100, height: 100) )
+                  player.physicsBody?.allowsRotation =  false
+                    player.physicsBody?.categoryBitMask = playermieczCategory
+                    player.physicsBody?.collisionBitMask = enemy1Category
+                  
                  }
             }
         }
@@ -333,6 +350,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         player.removeAllActions()
         playerMoveEnded()
         animateplayer_idle()
+        player.physicsBody = SKPhysicsBody(rectangleOf:CGSize(width: 55, height: 100) )
+        player.physicsBody?.allowsRotation =  false
+        player.physicsBody?.categoryBitMask = playerCategory
+        player.physicsBody?.collisionBitMask = enemy1Category
+        
+        
     }
     }
 
