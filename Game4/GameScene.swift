@@ -19,12 +19,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     private var playerWalkingFrames_jump: [SKTexture] = []
     private var playerWalkingFrames_attack: [SKTexture] = []
     var player = SKSpriteNode()
+    var piratka = SKSpriteNode()
     let cam = SKCameraNode()
     //var  healthpoint :  SKSpriteNode
     
     let playerCategory: UInt32 =  0x00000001 << 0
     let enemy1Category: UInt32 =  0x00000001 << 2
     let playermieczCategory: UInt32 =  0x0000001 << 1
+    let piratkaCategory: UInt32 = 0x0000001 << 3
     
     
     
@@ -136,7 +138,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         playerWalkingFrames = walkFrames
         let firstFrameTexture = playerWalkingFrames[0]
            
-           player.position = CGPoint(x: -150, y: -90 )
+           player.position = CGPoint(x: -1050, y: -90 )
           
         //player.setScale(0.090)
         player.size = CGSize(width: 170, height: 120)
@@ -218,8 +220,20 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         floor?.physicsBody = SKPhysicsBody(rectangleOf:CGSize (width: 4000, height: 100) )
         floor?.physicsBody?.isDynamic = false
         self.addChild(floor!)
-        
-               
+    }
+        func create_piratka() {
+            
+                piratka = SKSpriteNode(imageNamed: "piratka")
+                piratka.position = CGPoint(x: -850, y: -90 )
+            piratka.size = CGSize(width: 170, height: 120)
+            piratka.physicsBody = SKPhysicsBody(rectangleOf:CGSize(width: 55, height: 100) )
+            piratka.physicsBody?.allowsRotation =  false
+            piratka.physicsBody?.categoryBitMask = piratkaCategory
+            
+            piratka.physicsBody?.contactTestBitMask = playerCategory
+            piratka.xScale = abs(piratka.xScale) * -1
+                
+            self.addChild(piratka)
         
     }
     
@@ -253,6 +267,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             print("miecz")
             
         }
+        
+        if collison == playermieczCategory | piratkaCategory {
+            print("miecz_Piratka") }
+         //   piratka.isHidden = true
+            
+            else {
+               
+            }
+        if collison == playerCategory | piratkaCategory{
+                   print("HIT") }
     }
     
     
@@ -282,7 +306,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         backbutton()
         jumpbutton()
         attackbutton()
-        
+        create_piratka()
 
         
         }
@@ -342,7 +366,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                   player.physicsBody?.allowsRotation =  false
                     player.physicsBody?.categoryBitMask = playermieczCategory
                     player.physicsBody?.collisionBitMask = enemy1Category
-                    
+                   piratka.physicsBody?.contactTestBitMask = playermieczCategory
                  }
             }
         }
@@ -357,7 +381,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         player.physicsBody?.allowsRotation =  false
         player.physicsBody?.categoryBitMask = playerCategory
         player.physicsBody?.collisionBitMask = enemy1Category
-        
+        piratka.physicsBody?.contactTestBitMask = playerCategory
         
     }
     }
