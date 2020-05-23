@@ -20,7 +20,22 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     private var playerWalkingFrames_attack: [SKTexture] = []
     var player = SKSpriteNode()
     var piratka = SKSpriteNode()
+    var player_health: Int = 3
+    var piratka_health: Int = 5
+    
+    
+    var healthBar = SKSpriteNode()
+    var test = SKSpriteNode()
+    var  health :  CGFloat  =  1.0  {
+      didSet  {
+    healthBar.xScale = health
+        
+        if health > 1.0 { health = 1.0 }
+      }
+    }
+
     let cam = SKCameraNode()
+    
     //var  healthpoint :  SKSpriteNode
     
     let playerCategory: UInt32 =  0x00000001 << 0
@@ -233,8 +248,21 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             piratka.physicsBody?.contactTestBitMask = playerCategory
             piratka.xScale = abs(piratka.xScale) * -1
                 
-            self.addChild(piratka)
-        
+          //  self.addChild(piratka)
+            
+            healthBar = SKSpriteNode(imageNamed: "healthbar")
+          
+           // healthBar.position = CGPoint(x: piratka.position.x, y: pozycja_paskay)
+            healthBar.position = CGPoint(x: 30, y: 50)
+            healthBar.size = CGSize(width: 100, height: 10)
+            healthBar.anchorPoint = CGPoint(x: 1.0, y: 1.0)
+            piratka.addChild(healthBar)
+            
+           // test = SKSpriteNode(imageNamed: "healthbar")
+           // test.position = CGPoint(x: 10, y: self.size.height / 2)
+           // test.size = CGSize(width: 40, height: 60)
+           // piratka.addChild(test)
+            addChild(piratka)
     }
     
     func dead_player() {
@@ -257,6 +285,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func didBegin(_ contact: SKPhysicsContact) {
         let collison: UInt32 = contact.bodyA.categoryBitMask | contact.bodyB.categoryBitMask
         
+        
         if collison == playerCategory | enemy1Category{
             print("COLLISION") }
         
@@ -269,25 +298,36 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         
         if collison == playermieczCategory | piratkaCategory {
-            print("miecz_Piratka") }
+            print("miecz_Piratka")
+            health -= 0.2
          //   piratka.isHidden = true
             
-            else {
-               
+    
             }
         if collison == playerCategory | piratkaCategory{
-                   print("HIT") }
-    }
+            if piratka_health >= 1 {
+                print("dobrze") }}
+            
+            
+               
+               else {
+                 // print("malo zycia")
+               }
+            }
+        
+
     
     
     override func didMove(to view: SKView) {
      self.physicsWorld.contactDelegate = self
     
         
+  //     var healthBar = self.childNode(withName: "healthBar") as? SKSpriteNode
         
     if let planko = self.childNode(withName: "planko") as? SKSpriteNode{
      planko.color = UIColor.green
-       //physicsBody = SKPhysicsBody(rectangleOf:CGSize (width: 40, height: 40) )
+    
+        
         }
         
         
@@ -326,8 +366,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         cam.position.x = dx2
         cam.position.y = 0
         
+       // health -= 0.001
+       // print(health)
+        if health < 0 {
+      //      gameOver()
+           // print("GameOver")
+            piratka.isHidden = true
        }
-
+    }
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
          if let touch = touches.first {
                 let location = touch.location(in: self)
@@ -362,7 +408,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 if node.name == "attackButton" {
                      print("kliku kliku kliku kliku")
                     animateplayer_attack()
-                  player.physicsBody = SKPhysicsBody(rectangleOf:CGSize(width: 120, height: 100) )
+                  player.physicsBody = SKPhysicsBody(rectangleOf:CGSize(width: 40, height: 100) )
                   player.physicsBody?.allowsRotation =  false
                     player.physicsBody?.categoryBitMask = playermieczCategory
                     player.physicsBody?.collisionBitMask = enemy1Category
@@ -377,11 +423,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         player.removeAllActions()
         playerMoveEnded()
         animateplayer_idle()
-        player.physicsBody = SKPhysicsBody(rectangleOf:CGSize(width: 55, height: 100) )
+        player.physicsBody = SKPhysicsBody(rectangleOf:CGSize(width: 35, height: 100) )
         player.physicsBody?.allowsRotation =  false
         player.physicsBody?.categoryBitMask = playerCategory
         player.physicsBody?.collisionBitMask = enemy1Category
         piratka.physicsBody?.contactTestBitMask = playerCategory
+        print(health)
         
     }
     }
