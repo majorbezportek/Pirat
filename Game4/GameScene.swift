@@ -184,7 +184,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         playerWalkingFrames_attack = walkFrames4
         
  
-        
+        print("test")
         
         
         
