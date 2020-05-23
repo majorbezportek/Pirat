@@ -22,18 +22,31 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var piratka = SKSpriteNode()
     var player_health: Int = 3
     var piratka_health: Int = 5
-    
+    var playerhealthbar = SKSpriteNode()
+    var healthactualbar = SKSpriteNode()
     
     var healthBar = SKSpriteNode()
     var test = SKSpriteNode()
     var  health :  CGFloat  =  1.0  {
-      didSet  {
+     
+        
+        
+        didSet  {
     healthBar.xScale = health
         
         if health > 1.0 { health = 1.0 }
       }
     }
 
+    var  playerhealth :  CGFloat  =  1.0  {
+         didSet  {
+       healthactualbar.xScale = playerhealth
+           
+           if playerhealth > 1.0 { playerhealth = 1.0 }
+         }
+       }
+    
+    
     let cam = SKCameraNode()
     
     //var  healthpoint :  SKSpriteNode
@@ -102,12 +115,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     func attackbutton() {
            let attackbutton = SKSpriteNode(imageNamed: "previousbutton.png")
-              attackbutton.position = CGPoint(x: 300, y: -100)
+        attackbutton.position = CGPoint(x: 300, y: -100)
           attackbutton.zRotation = .pi / 2
               attackbutton.name = "attackButton"
           attackbutton.size = CGSize(width: 84.123, height: 93.571)
              // self.addChild(attackbutton)
+        
         cam.addChild(attackbutton)
+        
           }
     
     
@@ -168,7 +183,31 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         playerWalkingFrames_jump = walkFrames3
         playerWalkingFrames_attack = walkFrames4
         
+ 
+        
+        
+        
+        
         self.addChild(player)
+    }
+    
+    func healthbar_player() {
+        
+               playerhealthbar = SKSpriteNode(imageNamed: "BarBackground")
+                playerhealthbar.position = CGPoint(x: -100, y: 230)
+                playerhealthbar.size = CGSize(width: 210, height: 150)
+                playerhealthbar.zPosition = -10
+                playerhealthbar.anchorPoint = CGPoint(x: 0.0, y: 1.0)
+                healthactualbar = SKSpriteNode(imageNamed: "RedBar")
+                healthactualbar.position = CGPoint(x: -100, y: 230)
+                healthactualbar.size = CGSize(width: 200, height: 150)
+        healthactualbar.anchorPoint = CGPoint(x: 0.0, y: 1.0)
+                healthactualbar.zPosition = 2
+                
+        cam.addChild(healthactualbar)
+       cam.addChild(playerhealthbar)
+      //  self.addChild(playerhealthbar)
+             
     }
     
     func animateplayer() {
@@ -305,13 +344,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
             }
         if collison == playerCategory | piratkaCategory{
-            if piratka_health >= 1 {
-                print("dobrze") }}
-            
-            
-               
-               else {
-                 // print("malo zycia")
+            playerhealth -= 0.2
+            print("HIT")
                }
             }
         
@@ -347,7 +381,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         jumpbutton()
         attackbutton()
         create_piratka()
-
+        healthbar_player()
         
         }
         
@@ -366,11 +400,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         cam.position.x = dx2
         cam.position.y = 0
         
-       // health -= 0.001
-       // print(health)
+     
         if health < 0 {
       //      gameOver()
-           // print("GameOver")
+           
             piratka.isHidden = true
        }
     }
@@ -413,6 +446,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                     player.physicsBody?.categoryBitMask = playermieczCategory
                     player.physicsBody?.collisionBitMask = enemy1Category
                    piratka.physicsBody?.contactTestBitMask = playermieczCategory
+                   
                  }
             }
         }
@@ -429,6 +463,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         player.physicsBody?.collisionBitMask = enemy1Category
         piratka.physicsBody?.contactTestBitMask = playerCategory
         print(health)
+        print(playerhealth)
         
     }
     }

@@ -19,6 +19,8 @@
 		D148E76C24484E7B0020EFDA /* Game4UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D148E76B24484E7B0020EFDA /* Game4UITests.swift */; };
 		D148E7BC2448CFE70020EFDA /* walk.atlas in Resources */ = {isa = PBXBuildFile; fileRef = D148E7BB2448CFE70020EFDA /* walk.atlas */; };
 		D148E7BE2449DBC40020EFDA /* idle.atlas in Resources */ = {isa = PBXBuildFile; fileRef = D148E7BD2449DBC40020EFDA /* idle.atlas */; };
+		D1CA3FE82479CBA50045051C /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = D148E74B24484E780020EFDA /* GameScene.swift */; };
+		D1CA3FE92479CBA60045051C /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = D148E74B24484E780020EFDA /* GameScene.swift */; };
 		D1E6BE18244B4F8E00CC1B17 /* jump.atlas in Resources */ = {isa = PBXBuildFile; fileRef = D1E6BE17244B4F8E00CC1B17 /* jump.atlas */; };
 		D1E6BE1A244BACF500CC1B17 /* fire.sks in Resources */ = {isa = PBXBuildFile; fileRef = D1E6BE19244BACF500CC1B17 /* fire.sks */; };
 		D1E6BE1C244BB45000CC1B17 /* rain.sks in Resources */ = {isa = PBXBuildFile; fileRef = D1E6BE1B244BB45000CC1B17 /* rain.sks */; };
@@ -301,6 +303,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D1CA3FE82479CBA50045051C /* GameScene.swift in Sources */,
 				D148E76124484E7B0020EFDA /* Game4Tests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -309,6 +312,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D1CA3FE92479CBA60045051C /* GameScene.swift in Sources */,
 				D148E76C24484E7B0020EFDA /* Game4UITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
