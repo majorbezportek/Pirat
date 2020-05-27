@@ -19,6 +19,7 @@
 		D148E76C24484E7B0020EFDA /* Game4UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D148E76B24484E7B0020EFDA /* Game4UITests.swift */; };
 		D148E7BC2448CFE70020EFDA /* walk.atlas in Resources */ = {isa = PBXBuildFile; fileRef = D148E7BB2448CFE70020EFDA /* walk.atlas */; };
 		D148E7BE2449DBC40020EFDA /* idle.atlas in Resources */ = {isa = PBXBuildFile; fileRef = D148E7BD2449DBC40020EFDA /* idle.atlas */; };
+		D1BEB8D9247A857100810753 /* czarny_walk.atlas in Resources */ = {isa = PBXBuildFile; fileRef = D1BEB8D8247A857100810753 /* czarny_walk.atlas */; };
 		D1CA3FE82479CBA50045051C /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = D148E74B24484E780020EFDA /* GameScene.swift */; };
 		D1CA3FE92479CBA60045051C /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = D148E74B24484E780020EFDA /* GameScene.swift */; };
 		D1E6BE18244B4F8E00CC1B17 /* jump.atlas in Resources */ = {isa = PBXBuildFile; fileRef = D1E6BE17244B4F8E00CC1B17 /* jump.atlas */; };
@@ -63,6 +64,7 @@
 		D148E76D24484E7B0020EFDA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D148E7BB2448CFE70020EFDA /* walk.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = walk.atlas; sourceTree = "<group>"; };
 		D148E7BD2449DBC40020EFDA /* idle.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = idle.atlas; sourceTree = "<group>"; };
+		D1BEB8D8247A857100810753 /* czarny_walk.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = czarny_walk.atlas; sourceTree = "<group>"; };
 		D1E6BE17244B4F8E00CC1B17 /* jump.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = jump.atlas; sourceTree = "<group>"; };
 		D1E6BE19244BACF500CC1B17 /* fire.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = fire.sks; sourceTree = "<group>"; };
 		D1E6BE1B244BB45000CC1B17 /* rain.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = rain.sks; sourceTree = "<group>"; };
@@ -117,6 +119,7 @@
 		D148E74424484E770020EFDA /* Game4 */ = {
 			isa = PBXGroup;
 			children = (
+				D1BEB8D8247A857100810753 /* czarny_walk.atlas */,
 				D1E6BE1D244C8BE600CC1B17 /* attack.atlas */,
 				D1E6BE17244B4F8E00CC1B17 /* jump.atlas */,
 				D148E7BD2449DBC40020EFDA /* idle.atlas */,
@@ -259,6 +262,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D1E6BE1E244C8BE600CC1B17 /* attack.atlas in Resources */,
+				D1BEB8D9247A857100810753 /* czarny_walk.atlas in Resources */,
 				D148E75124484E780020EFDA /* Main.storyboard in Resources */,
 				D1E6BE18244B4F8E00CC1B17 /* jump.atlas in Resources */,
 				D1E6BE1A244BACF500CC1B17 /* fire.sks in Resources */,

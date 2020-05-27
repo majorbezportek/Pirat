@@ -18,14 +18,19 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     private var playerWalkingFrames_idle: [SKTexture] = []
     private var playerWalkingFrames_jump: [SKTexture] = []
     private var playerWalkingFrames_attack: [SKTexture] = []
+    private var czarnyWalkingFrames: [SKTexture] = []
     var player = SKSpriteNode()
     var piratka = SKSpriteNode()
     var player_health: Int = 3
     var piratka_health: Int = 5
     var playerhealthbar = SKSpriteNode()
     var healthactualbar = SKSpriteNode()
+    var czarny = SKSpriteNode()
+    
+
     
     var healthBar = SKSpriteNode()
+    var healthBarczarny = SKSpriteNode()
     var test = SKSpriteNode()
     var  health :  CGFloat  =  1.0  {
      
@@ -38,6 +43,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
       }
     }
 
+    
+    
     var  playerhealth :  CGFloat  =  1.0  {
          didSet  {
        healthactualbar.xScale = playerhealth
@@ -46,6 +53,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
          }
        }
     
+    var  czarnyhealth :  CGFloat  =  1.0  {
+      didSet  {
+    healthBarczarny.xScale = czarnyhealth
+        
+        if czarnyhealth > 1.0 { czarnyhealth = 1.0 }
+      }
+    }
     
     let cam = SKCameraNode()
     
@@ -55,7 +69,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     let enemy1Category: UInt32 =  0x00000001 << 2
     let playermieczCategory: UInt32 =  0x0000001 << 1
     let piratkaCategory: UInt32 = 0x0000001 << 3
-    
+    let czarnyCategory: UInt32 = 0x0000001 << 4
     
     
     
@@ -201,7 +215,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 healthactualbar = SKSpriteNode(imageNamed: "RedBar")
                 healthactualbar.position = CGPoint(x: -100, y: 230)
                 healthactualbar.size = CGSize(width: 200, height: 150)
-        healthactualbar.anchorPoint = CGPoint(x: 0.0, y: 1.0)
+                healthactualbar.anchorPoint = CGPoint(x: 0.0, y: 1.0)
                 healthactualbar.zPosition = 2
                 
         cam.addChild(healthactualbar)
@@ -302,7 +316,60 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
            // test.size = CGSize(width: 40, height: 60)
            // piratka.addChild(test)
             addChild(piratka)
+            piratka.isHidden = true
     }
+    
+    func create_czarny() {
+                
+        var czarnywalkFrames: [SKTexture] = []
+        let czarnyAnimatedAtlas = SKTextureAtlas(named: "czarny_walk")
+       
+        for pp in 0...6 {
+          let czarnyTextureName = "3_3-PIRATE_WALK_00\(pp).png"
+          czarnywalkFrames.append(czarnyAnimatedAtlas.textureNamed(czarnyTextureName))
+        }
+        
+        czarnyWalkingFrames = czarnywalkFrames
+        let firstFrameTexture = czarnyWalkingFrames[0]
+        
+        
+        //            czarny = SKSpriteNode(imageNamed: "enemy1")
+                    czarny.position = CGPoint(x: -800, y: -90 )
+                czarny.size = CGSize(width: 170, height: 120)
+                czarny.physicsBody = SKPhysicsBody(rectangleOf:CGSize(width: 55, height: 100) )
+                czarny.physicsBody?.allowsRotation =  false
+                czarny.physicsBody?.categoryBitMask = czarnyCategory
+                
+                czarny.physicsBody?.contactTestBitMask = playerCategory
+                czarny.xScale = abs(czarny.xScale) * -1
+                
+                czarnyWalkingFrames = czarnywalkFrames
+
+                
+                healthBarczarny = SKSpriteNode(imageNamed: "healthbar")
+              
+
+                healthBarczarny.position = CGPoint(x: 30, y: 50)
+                healthBarczarny.size = CGSize(width: 100, height: 10)
+                healthBarczarny.anchorPoint = CGPoint(x: 1.0, y: 1.0)
+                czarny.addChild(healthBarczarny)
+                
+                addChild(czarny)
+          //      czarny.isHidden = true
+    
+    }
+    func czarnywalk() {
+          czarny.run(SKAction.repeatForever(
+            SKAction.animate(with: czarnyWalkingFrames,
+                             timePerFrame: 0.07,
+                             resize: false,
+                             restore: true)),
+            withKey:"walkingInPlaceBear2")
+    
+    }
+    
+
+
     
     func dead_player() {
         let location = player.position
@@ -344,11 +411,21 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
             }
         if collison == playerCategory | piratkaCategory{
-            playerhealth -= 0.2
+            playerhealth -= 0.05
             print("HIT")
                }
-            }
         
+        if collison == playerCategory | czarnyCategory{
+                  playerhealth -= 0.05
+                  print("HIT")
+            czarny.physicsBody?.applyImpulse(CGVector(dx: 50, dy: 0))
+                     }
+        
+        if collison == playermieczCategory | czarnyCategory {
+                  print("miecz_Piratka")
+                  czarnyhealth -= 0.2
+            }
+    }
 
     
     
@@ -382,7 +459,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         attackbutton()
         create_piratka()
         healthbar_player()
-        
+        create_czarny()
+        czarnywalk()
+     
         }
         
         
@@ -400,12 +479,38 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         cam.position.x = dx2
         cam.position.y = 0
         
+        let czarnyfollow = (location2.x) - (czarny.position.x)
      
         if health < 0 {
       //      gameOver()
            
             piratka.isHidden = true
        }
+        
+        if playerhealth < 0 {
+            player.isHidden = true
+        }
+        
+        if czarnyhealth < 0 {
+            czarny.isHidden = true
+        }
+        
+        
+        let go = SKAction.moveTo(x: location2.x, duration: 10)
+                 let repeatAction = SKAction.repeatForever(go)
+        czarny.run(repeatAction)
+        if czarnyfollow > 1 {
+            czarny.xScale = abs(czarny.xScale) * 1
+            print("lewo")
+            
+        }
+        else {
+            czarny.xScale = abs(czarny.xScale) * -1
+            print("prawo")
+        }
+       // print(location2.x)
+       // print(czarny.position.x)
+        print(czarnyfollow)
     }
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
          if let touch = touches.first {
@@ -441,11 +546,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 if node.name == "attackButton" {
                      print("kliku kliku kliku kliku")
                     animateplayer_attack()
-                  player.physicsBody = SKPhysicsBody(rectangleOf:CGSize(width: 40, height: 100) )
+                  player.physicsBody = SKPhysicsBody(rectangleOf:CGSize(width: 50, height: 100) )
+                player.physicsBody?.applyImpulse(CGVector(dx: -10, dy: 0))
                   player.physicsBody?.allowsRotation =  false
                     player.physicsBody?.categoryBitMask = playermieczCategory
                     player.physicsBody?.collisionBitMask = enemy1Category
                    piratka.physicsBody?.contactTestBitMask = playermieczCategory
+                    czarny.physicsBody?.contactTestBitMask = playermieczCategory
                    
                  }
             }
@@ -462,6 +569,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         player.physicsBody?.categoryBitMask = playerCategory
         player.physicsBody?.collisionBitMask = enemy1Category
         piratka.physicsBody?.contactTestBitMask = playerCategory
+        czarny.physicsBody?.contactTestBitMask = playerCategory
+        
         print(health)
         print(playerhealth)
         
