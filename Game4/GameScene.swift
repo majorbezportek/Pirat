@@ -153,6 +153,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         var walkFrames3: [SKTexture] = []
         var walkFrames4: [SKTexture] = []
         
+        
+        let spaceShipTexture = SKTexture(imageNamed: "p2.png")
         let playerAnimatedAtlas = SKTextureAtlas(named: "walk")
         let playerAnimatedAtlas_idle = SKTextureAtlas(named: "idle")
         let playerAnimatedAtlas_jump = SKTextureAtlas(named: "jump")
@@ -183,11 +185,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let firstFrameTexture = playerWalkingFrames[0]
            
            player.position = CGPoint(x: -1050, y: -90 )
-          
+        
         //player.setScale(0.090)
         player.size = CGSize(width: 170, height: 120)
-        player.physicsBody = SKPhysicsBody(rectangleOf:CGSize(width: 55, height: 100) )
-       
+       // player.physicsBody = SKPhysicsBody(rectangleOf:CGSize(width: 35, height: 100))
+        let texturedSpaceShip = SKSpriteNode(texture: spaceShipTexture)
+        player.physicsBody = SKPhysicsBody(texture: spaceShipTexture , size: CGSize(width: player.size.width,
+                                                                                    height: player.size.height));
+        //player.physicsBody = SKPhysicsBody(texture: play, size: player.size)
         player.physicsBody?.allowsRotation =  false
         player.physicsBody?.categoryBitMask = playerCategory
         player.physicsBody?.collisionBitMask = enemy1Category
@@ -230,7 +235,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                          timePerFrame: 0.05,
                          resize: false,
                          restore: true)),
-        withKey:"walkingInPlaceBear")
+       withKey:"walkingInPlaceBear")
         
     }
     func animateplayer_idle() {
@@ -336,7 +341,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         //            czarny = SKSpriteNode(imageNamed: "enemy1")
                     czarny.position = CGPoint(x: -800, y: -90 )
                 czarny.size = CGSize(width: 170, height: 120)
-                czarny.physicsBody = SKPhysicsBody(rectangleOf:CGSize(width: 55, height: 100) )
+                czarny.physicsBody = SKPhysicsBody(rectangleOf:CGSize(width: 35, height: 100) )
                 czarny.physicsBody?.allowsRotation =  false
                 czarny.physicsBody?.categoryBitMask = czarnyCategory
                 
@@ -415,16 +420,24 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             print("HIT")
                }
         
-        if collison == playerCategory | czarnyCategory{
-                  playerhealth -= 0.05
-                  print("HIT")
-            czarny.physicsBody?.applyImpulse(CGVector(dx: 50, dy: 0))
-                     }
+//        if collison == playerCategory | czarnyCategory{
+//                  playerhealth -= 0.05
+//                  print("HIT")
+//            czarny.physicsBody?.applyImpulse(CGVector(dx: 50, dy: 0))
+//                     }
         
-        if collison == playermieczCategory | czarnyCategory {
-                  print("miecz_Piratka")
-                  czarnyhealth -= 0.2
-            }
+                if collison == czarnyCategory | playerCategory{
+                          playerhealth -= 0.05
+                          print("HIT")
+                    czarny.physicsBody?.applyImpulse(CGVector(dx: 50, dy: 0))
+                             }
+
+        
+        
+ //       if collison == playermieczCategory | czarnyCategory {
+ //                 print("miecz_Piratka")
+  //                czarnyhealth -= 0.2
+ //           }
     }
 
     
@@ -496,21 +509,21 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         
         
-        let go = SKAction.moveTo(x: location2.x, duration: 10)
-                 let repeatAction = SKAction.repeatForever(go)
-        czarny.run(repeatAction)
+        //let go = SKAction.moveTo(x: location2.x, duration: 10)
+          //       let repeatAction = SKAction.repeatForever(go)
+        //czarny.run(repeatAction)
         if czarnyfollow > 1 {
             czarny.xScale = abs(czarny.xScale) * 1
-            print("lewo")
+          //  print("lewo")
             
         }
         else {
             czarny.xScale = abs(czarny.xScale) * -1
-            print("prawo")
+       //     print("prawo")
         }
        // print(location2.x)
        // print(czarny.position.x)
-        print(czarnyfollow)
+      // print(czarnyfollow)
     }
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
          if let touch = touches.first {
@@ -519,7 +532,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                  
                 for node in nodesarray {
                     if node.name == "previousButton" {
-                         print("klik")
+                //         print("klik")
                         
                                goRight()
                                 animateplayer()
@@ -528,7 +541,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             for node in nodesarray {
                 if node.name == "backButton" {
                     
-                     print("kliku kliku")
+                //     print("kliku kliku")
                     goLeft()
                     
                     animateplayer()
@@ -537,23 +550,23 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             }
             for node in nodesarray {
                 if node.name == "jumpButton" {
-                     print("kliku kliku kliku")
+                //     print("kliku kliku kliku")
                     jump()
                     animateplayer_jump()
                  }
             }
             for node in nodesarray {
                 if node.name == "attackButton" {
-                     print("kliku kliku kliku kliku")
+             //        print("kliku kliku kliku kliku")
                     animateplayer_attack()
-                  player.physicsBody = SKPhysicsBody(rectangleOf:CGSize(width: 50, height: 100) )
+                  player.physicsBody = SKPhysicsBody(rectangleOf:CGSize(width: 35, height: 100) )
                 player.physicsBody?.applyImpulse(CGVector(dx: -10, dy: 0))
                   player.physicsBody?.allowsRotation =  false
                     player.physicsBody?.categoryBitMask = playermieczCategory
                     player.physicsBody?.collisionBitMask = enemy1Category
                    piratka.physicsBody?.contactTestBitMask = playermieczCategory
                     czarny.physicsBody?.contactTestBitMask = playermieczCategory
-                   
+                //    czarny.physicsBody = SKPhysicsBody(rectangleOf:CGSize(width: 50, height: 100) )
                  }
             }
         }
@@ -570,6 +583,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         player.physicsBody?.collisionBitMask = enemy1Category
         piratka.physicsBody?.contactTestBitMask = playerCategory
         czarny.physicsBody?.contactTestBitMask = playerCategory
+        czarny.physicsBody = SKPhysicsBody(rectangleOf:CGSize(width: 35, height: 100) )
+        
         
         print(health)
         print(playerhealth)
