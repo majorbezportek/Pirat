@@ -28,8 +28,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var czarny = SKSpriteNode()
     private var updateTime: Double = 0
     private var updateTime2: Double = 10
+    private var updateTime3: Double = 5
     var czas = 0
-
+    var piratkaczas = 0
    
     var healthBar = SKSpriteNode()
     var healthBarczarny = SKSpriteNode()
@@ -67,11 +68,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     
     
-    let playerCategory: UInt32 =  0x00000001 << 0
-    let enemy1Category: UInt32 =  0x00000001 << 2
-    let playermieczCategory: UInt32 =  0x0000001 << 1
-    let piratkaCategory: UInt32 = 0x0000001 << 3
-    let czarnyCategory: UInt32 = 0x0000001 << 2
+    let playerCategory: UInt32 =  0b100000
+    let enemy1Category: UInt32 =  0b10000
+    let playermieczCategory: UInt32 =  0b10
+    let piratkaCategory: UInt32 = 0b100
+    let czarnyCategory: UInt32 = 0b1000
     
     
     
@@ -199,7 +200,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         player.physicsBody?.allowsRotation =  false
         player.physicsBody?.categoryBitMask = playerCategory
-       // player.physicsBody?.collisionBitMask = enemy1Category
+        player.physicsBody?.collisionBitMask = piratkaCategory
+        player.physicsBody?.contactTestBitMask = piratkaCategory
        
         
         playerWalkingFrames_idle = walkFrames2
@@ -303,7 +305,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             piratka.size = CGSize(width: 170, height: 120)
             piratka.physicsBody = SKPhysicsBody(rectangleOf:CGSize(width: 35, height: 100) )
             piratka.physicsBody?.allowsRotation =  false
-            
+        //piratka.physicsBody?.collisionBitMask = playermieczCategory
             piratka.physicsBody?.categoryBitMask = piratkaCategory
             piratka.physicsBody?.contactTestBitMask = playerCategory
            
@@ -396,30 +398,48 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func didBegin(_ contact: SKPhysicsContact) {
        
         let collison: UInt32 = contact.bodyA.categoryBitMask | contact.bodyB.categoryBitMask
-        
+        let collison2: UInt32 = contact.bodyA.collisionBitMask | contact.bodyB.collisionBitMask
         
        if collison ==  czarnyCategory | playermieczCategory{
-        czarnyhealth -= 0.3
+        czarnyhealth -= 0.5
         }
         
-        print(piratkaCategory)
-          print(playerCategory)
-          print(czarnyCategory)
+        //print(piratkaCategory)
+        //  print(playerCategory)
+        //  print(czarnyCategory)
         
-        if collison ==  piratkaCategory | playermieczCategory{
-        print("HIT PIRATKA")
-        health -= 0.3
+        
+        if piratkaczas == 5 {
+
+              }
+              else {
+                  if collison ==  piratkaCategory | playerCategory{
+                  
+                  piratka.physicsBody?.applyImpulse(CGVector(dx: 0, dy: 150))
+                  piratkaczas = 5
+                  playerhealth -= 0.03
+                  print("HIT3_p")
+                  updateTime3 = 0
+                  if collison == nil {return}
+                  
+                  
+              }
         }
+        
+//        if collison ==  piratkaCategory | playerCategory{
+//        print("HIT PIRATKA")
+//        health -= 0.3
+//        }
         
         if czas == 10 {
 
         }
         else {
             if collison ==  czarnyCategory | playerCategory{
-               
+            
             czarny.physicsBody?.applyImpulse(CGVector(dx: 0, dy: 150))
             czas = 10
-            playerhealth -= 0.05
+            playerhealth -= 0.03
             print("HIT3")
             updateTime2 = 0
             if collison == nil {return}
@@ -483,6 +503,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if updateTime2 == 0 {
             updateTime2 = currentTime
         }
+        if updateTime3 == 0 {
+            updateTime3 = currentTime
+        }
         if currentTime - updateTime2 < 10 {
             czas = 10
              
@@ -494,12 +517,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 
 
         let czarnyfollow = (location2.x) - (czarny.position.x)
-     
-        if health < 0 {
-      //      gameOver()
-           
-            piratka.isHidden = true
-       }
+ 
+        
+//        if health < 0 {
+//      //      gameOver()
+//
+//            piratka.isHidden = true
+//       }
         
         if playerhealth < 0 {
             player.isHidden = true
@@ -564,7 +588,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                // player.physicsBody?.applyImpulse(CGVector(dx: 5, dy: 0))
                   player.physicsBody?.allowsRotation =  false
                     player.physicsBody?.categoryBitMask = playermieczCategory
-                    player.physicsBody?.collisionBitMask = enemy1Category
+                   
                     
                     piratka.physicsBody?.contactTestBitMask = playermieczCategory
                     czarny.physicsBody?.contactTestBitMask = playermieczCategory
