@@ -220,8 +220,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 playerhealthbar.zPosition = -10
                 playerhealthbar.anchorPoint = CGPoint(x: 0.0, y: 1.0)
                 healthactualbar = SKSpriteNode(imageNamed: "RedBar")
-                healthactualbar.position = CGPoint(x: -100, y: 230)
-                healthactualbar.size = CGSize(width: 200, height: 150)
+                healthactualbar.position = CGPoint(x: -100, y: 178)
+                healthactualbar.size = CGSize(width: 190, height: 30)
                 healthactualbar.anchorPoint = CGPoint(x: 0.0, y: 1.0)
                 healthactualbar.zPosition = 2
                 
