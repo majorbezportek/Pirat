@@ -187,7 +187,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         playerWalkingFrames = walkFrames
         let firstFrameTexture = playerWalkingFrames[0]
            
-           player.position = CGPoint(x: -1050, y: -90 )
+           player.position = CGPoint(x: 2580, y: 10 )
         
         
         player.size = CGSize(width: 170, height: 120)
@@ -457,7 +457,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     override func didMove(to view: SKView) {
      self.physicsWorld.contactDelegate = self
     
-        
+    if let bomba = self.childNode(withName: "bomba") as? SKSpriteNode{
+     bomba.color = UIColor.green
+        bomba.physicsBody?.pinned = true
+        }
 
         
     if let planko = self.childNode(withName: "planko") as? SKSpriteNode{
