@@ -22,6 +22,7 @@
 		D1BEB8D9247A857100810753 /* czarny_walk.atlas in Resources */ = {isa = PBXBuildFile; fileRef = D1BEB8D8247A857100810753 /* czarny_walk.atlas */; };
 		D1CA3FE82479CBA50045051C /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = D148E74B24484E780020EFDA /* GameScene.swift */; };
 		D1CA3FE92479CBA60045051C /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = D148E74B24484E780020EFDA /* GameScene.swift */; };
+		D1DBE28A251DFCF200780B24 /* MainMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1DBE289251DFCF200780B24 /* MainMenu.swift */; };
 		D1E6BE18244B4F8E00CC1B17 /* jump.atlas in Resources */ = {isa = PBXBuildFile; fileRef = D1E6BE17244B4F8E00CC1B17 /* jump.atlas */; };
 		D1E6BE1A244BACF500CC1B17 /* fire.sks in Resources */ = {isa = PBXBuildFile; fileRef = D1E6BE19244BACF500CC1B17 /* fire.sks */; };
 		D1E6BE1C244BB45000CC1B17 /* rain.sks in Resources */ = {isa = PBXBuildFile; fileRef = D1E6BE1B244BB45000CC1B17 /* rain.sks */; };
@@ -65,6 +66,7 @@
 		D148E7BB2448CFE70020EFDA /* walk.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = walk.atlas; sourceTree = "<group>"; };
 		D148E7BD2449DBC40020EFDA /* idle.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = idle.atlas; sourceTree = "<group>"; };
 		D1BEB8D8247A857100810753 /* czarny_walk.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = czarny_walk.atlas; sourceTree = "<group>"; };
+		D1DBE289251DFCF200780B24 /* MainMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenu.swift; sourceTree = "<group>"; };
 		D1E6BE17244B4F8E00CC1B17 /* jump.atlas */ = {isa = PBXFileReference; lastKnownFileType = folder.skatlas; path = jump.atlas; sourceTree = "<group>"; };
 		D1E6BE19244BACF500CC1B17 /* fire.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = fire.sks; sourceTree = "<group>"; };
 		D1E6BE1B244BB45000CC1B17 /* rain.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = rain.sks; sourceTree = "<group>"; };
@@ -128,6 +130,7 @@
 				D148E74724484E780020EFDA /* GameScene.sks */,
 				D148E74924484E780020EFDA /* Actions.sks */,
 				D148E74B24484E780020EFDA /* GameScene.swift */,
+				D1DBE289251DFCF200780B24 /* MainMenu.swift */,
 				D148E74D24484E780020EFDA /* GameViewController.swift */,
 				D148E74F24484E780020EFDA /* Main.storyboard */,
 				D148E75224484E7B0020EFDA /* Assets.xcassets */,
@@ -300,6 +303,7 @@
 				D148E74C24484E780020EFDA /* GameScene.swift in Sources */,
 				D148E74E24484E780020EFDA /* GameViewController.swift in Sources */,
 				D148E74624484E770020EFDA /* AppDelegate.swift in Sources */,
+				D1DBE28A251DFCF200780B24 /* MainMenu.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -21,6 +21,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     private var czarnyWalkingFrames: [SKTexture] = []
     var player = SKSpriteNode()
     var piratka = SKSpriteNode()
+    var bomba = SKSpriteNode()
     var player_health: Int = 3
     var piratka_health: Int = 5
     var playerhealthbar = SKSpriteNode()
@@ -187,7 +188,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         playerWalkingFrames = walkFrames
         let firstFrameTexture = playerWalkingFrames[0]
            
-           player.position = CGPoint(x: 2580, y: 10 )
+           player.position = CGPoint(x: -1080, y: 10 )
         
         
         player.size = CGSize(width: 170, height: 120)
@@ -340,7 +341,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         
                 czarny = SKSpriteNode(imageNamed: "enemy1")
-                czarny.position = CGPoint(x: -1000, y: -90 )
+                czarny.position = CGPoint(x: 2880, y: -90 )
                 czarny.size = CGSize(width: 170, height: 120)
                 czarny.physicsBody = SKPhysicsBody(rectangleOf:CGSize(width: 35, height: 100) )
                 czarny.physicsBody?.allowsRotation =  false
@@ -457,10 +458,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     override func didMove(to view: SKView) {
      self.physicsWorld.contactDelegate = self
     
-    if let bomba = self.childNode(withName: "bomba") as? SKSpriteNode{
-     bomba.color = UIColor.green
-        bomba.physicsBody?.pinned = true
-        }
 
         
     if let planko = self.childNode(withName: "planko") as? SKSpriteNode{
