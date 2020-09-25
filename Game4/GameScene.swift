@@ -133,9 +133,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
     
     func attackbutton() {
-           let attackbutton = SKSpriteNode(imageNamed: "previousbutton.png")
+           let attackbutton = SKSpriteNode(imageNamed: "miecz")
         attackbutton.position = CGPoint(x: 300, y: -100)
-          attackbutton.zRotation = .pi / 2
+          //attackbutton.zRotation = .pi / 2
               attackbutton.name = "attackButton"
           attackbutton.size = CGSize(width: 84.123, height: 93.571)
              // self.addChild(attackbutton)
@@ -189,7 +189,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         playerWalkingFrames = walkFrames
         let firstFrameTexture = playerWalkingFrames[0]
            
-           player.position = CGPoint(x: 4440, y: 10 )
+           player.position = CGPoint(x: 4570, y: 10 )
         
         
         player.size = CGSize(width: 170, height: 120)
