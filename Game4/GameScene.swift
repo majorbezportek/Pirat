@@ -20,6 +20,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     private var playerWalkingFrames_attack: [SKTexture] = []
     private var czarnyWalkingFrames: [SKTexture] = []
     var player = SKSpriteNode()
+    
     var piratka = SKSpriteNode()
     var bomba = SKSpriteNode()
     var player_health: Int = 3
@@ -188,7 +189,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         playerWalkingFrames = walkFrames
         let firstFrameTexture = playerWalkingFrames[0]
            
-           player.position = CGPoint(x: -1080, y: 10 )
+           player.position = CGPoint(x: 4440, y: 10 )
         
         
         player.size = CGSize(width: 170, height: 120)
@@ -326,6 +327,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             piratka.isHidden = false
     }
     
+
+        
+    
     func create_czarny() {
                 
         var czarnywalkFrames: [SKTexture] = []
@@ -402,7 +406,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let collison2: UInt32 = contact.bodyA.collisionBitMask | contact.bodyB.collisionBitMask
         
        if collison ==  czarnyCategory | playermieczCategory{
-        czarnyhealth -= 0.5
+        czarnyhealth -= 0.1
         }
         
         //print(piratkaCategory)
@@ -418,7 +422,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                   
                   piratka.physicsBody?.applyImpulse(CGVector(dx: 0, dy: 150))
                   piratkaczas = 5
-                  playerhealth -= 0.03
+                    playerhealth -= 0.18
                   print("HIT3_p")
                   updateTime3 = 0
                   if collison == nil {return}
@@ -440,7 +444,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             
             czarny.physicsBody?.applyImpulse(CGVector(dx: 0, dy: 150))
             czas = 10
-            playerhealth -= 0.03
+            playerhealth -= 0.18
             print("HIT3")
             updateTime2 = 0
             if collison == nil {return}
@@ -458,7 +462,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     override func didMove(to view: SKView) {
      self.physicsWorld.contactDelegate = self
     
-
+        if (self.childNode(withName: "statek") as? SKSpriteNode) != nil{
+                 physicsBody = SKPhysicsBody(rectangleOf:CGSize (width: 509, height: 200))
+             }
         
     if let planko = self.childNode(withName: "planko") as? SKSpriteNode{
      planko.color = UIColor.green
@@ -472,7 +478,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
        
         self.camera = cam
         addChild(cam)
-
+    
+     
+        
         create_enemy()
         createPlayer()
         animateplayer_idle()
@@ -515,15 +523,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
           player.isHidden = false
         }
 
-
-        let czarnyfollow = (location2.x) - (czarny.position.x)
- 
         
-//        if health < 0 {
-//      //      gameOver()
-//
-//            piratka.isHidden = true
-//       }
+        let czarnyfollow = (location2.x) - (czarny.position.x)
+       // print(czarnyfollow)
+        
+        if health < 0 {
+        dead_player()
+
+        }
         
         if playerhealth < 0 {
             player.isHidden = true
@@ -534,9 +541,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             
         }
         
+        if czarnyfollow < -500 {
+            
+        }
         
-        
-        let go = SKAction.moveTo(x: location2.x, duration: 10)
+        else {
+        let go = SKAction.moveTo(x: location2.x, duration: 5)
                  let repeatAction = SKAction.repeatForever(go)
         czarny.run(repeatAction)
         if czarnyfollow > 1 {
@@ -548,7 +558,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
 
     }
-    
+    }
   
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
